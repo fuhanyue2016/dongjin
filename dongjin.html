@@ -7,131 +7,99 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --navy: #0a0e1a; --navy-2: #111827; --card: #151c2e;
-    --gold: #c9a961; --gold-l: #e0c88a; --cream: #f5f1e8;
-    --red: #c0392b; --blue: #2c5f8a; --sidebar-w: 220px;
+    --navy: #eef5fb;      /* 主背景：浅蓝色 */
+    --navy-2: #ddecfa;    /* 次背景：稍深一点的浅蓝 */
+    --card: #ffffff;      /* 卡片背景：纯白 */
+    --gold: #b8860b;      /* 主色调：金棕色 */
+    --gold-l: #d4a017;    /* 亮金棕色 */
+    --cream: #1a2b3c;     /* 文字颜色：深灰蓝 */
+    --red: #c0392b;
+    --blue: #2c5f8a;
+    --sidebar-w: 220px;
   }
   html { scroll-behavior: smooth; }
   body {
     font-family: "PingFang SC", "Songti SC", "Microsoft YaHei", serif;
-    background-color: var(--navy);
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23c9a961' stroke-width='0.5' opacity='0.08'%3E%3Cpath d='M0 40 L40 0 L80 40 L40 80 Z'/%3E%3Ccircle cx='40' cy='40' r='8'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    color: var(--cream);
-    line-height: 1.8;
-    overflow-x: hidden;
+    background: var(--navy); color: var(--cream); line-height: 1.8; overflow-x: hidden;
+    animation: pageFade 1.2s ease;
   }
+  @keyframes pageFade {
+    from {opacity:0;}
+    to {opacity:1;}
+  }
+  body.sidebar-open {
+    overflow:hidden;
+  }
+  /* ============ 侧边栏 ============ */
   .sidebar {
     position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh;
-    background: rgba(10, 14, 26, 0.95); backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px); border-right: 1px solid rgba(201, 169, 97, 0.15);
+    background: rgba(238, 245, 251, 0.95); backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); border-right: 1px solid rgba(44, 95, 138, 0.15);
     padding: 40px 0; z-index: 100; transition: transform 0.3s ease;
   }
   .sidebar .logo { font-size: 1.6rem; font-weight: 300; letter-spacing: 0.4em; text-align: center; color: var(--gold); margin-bottom: 8px; }
-  .sidebar .logo-en { text-align: center; font-size: 0.65rem; letter-spacing: 0.5em; color: rgba(201, 169, 97, 0.5); margin-bottom: 40px; }
+  .sidebar .logo-en { text-align: center; font-size: 0.65rem; letter-spacing: 0.5em; color: rgba(184, 134, 11, 0.7); margin-bottom: 40px; }
   .sidebar nav a {
-    display: block; padding: 14px 28px; color: rgba(245, 241, 232, 0.65);
+    display: block; padding: 14px 28px; color: rgba(26, 43, 60, 0.75);
     text-decoration: none; font-size: 0.9rem; letter-spacing: 0.15em;
-    border-left: 2px solid transparent; transition: all 0.3s; position: relative; cursor: pointer;
+    border-left: 2px solid transparent; transition: all 0.3s; position: relative;
   }
-  .sidebar nav a::before {
-    content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-    width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
-  }
-  .sidebar nav a:hover, .sidebar nav a.active { color: var(--gold); background: rgba(201, 169, 97, 0.05); border-left-color: var(--gold); }
-  .sidebar nav a:hover::before { width: 12px; }
+  .sidebar nav a:hover, .sidebar nav a.active { color: var(--gold); background: rgba(44, 95, 138, 0.05); border-left-color: var(--gold); }
   .menu-toggle {
     display: none; position: fixed; top: 16px; left: 16px; z-index: 200;
-    width: 44px; height: 44px; background: rgba(10, 14, 26, 0.9);
-    border: 1px solid rgba(201, 169, 97, 0.3); border-radius: 8px;
+    width: 44px; height: 44px; background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(44, 95, 138, 0.3); border-radius: 8px;
     color: var(--gold); font-size: 1.3rem; cursor: pointer; backdrop-filter: blur(10px);
   }
   main { margin-left: var(--sidebar-w); min-height: 100vh; }
-  .page-section {
-    display: none;
-    animation: fadePage 0.5s ease;
-  }
-  .page-section.active {
-    display: block;
-  }
-  @keyframes fadePage {
-    from { opacity:0; transform: translateY(16px); }
-    to { opacity:1; transform: translateY(0); }
-  }
-
-.hero {
+  /* ============ 首页 Hero ============ */
+  .hero {
     height: 100vh;
     display: grid;
     place-items: center;
-    text-align:center;
-    padding: 0;
+    text-align: center;
+    padding: 0 20px;
     position: relative;
-    background: radial-gradient(ellipse at 30% 40%, rgba(44, 95, 138, 0.3) 0%, transparent 55%),
-                radial-gradient(ellipse at 70% 60%, rgba(192, 57, 43, 0.2) 0%, transparent 55%),
-                #182238;
+    background: radial-gradient(ellipse at 30% 40%, rgba(44, 95, 138, 0.15) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 60%, rgba(192, 57, 43, 0.1) 0%, transparent 55%),
+                #eef5fb;
     overflow: hidden;
-}
-.hero::before {
-    content: ""; 
-    position: absolute; 
-    inset: -10%;
-    background-image: 
-        repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(201, 169, 97, 0.18) 29px, rgba(201, 169, 97, 0.18) 30px),
-        repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(201, 169, 97, 0.18) 29px, rgba(201, 169, 97, 0.18) 30px);
-    animation: gridMove 40s linear infinite; 
-    pointer-events: none;
-}
-  .hero::after{
-    content:"";
-    position:absolute;
-    inset:32px;
-    border:1px solid rgba(201,169,97,0.18);
-    background-image:
-      url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23c9a961' stroke-width='1' opacity='0.2'%3E%3Cpath d='M0 0 L30 0 L30 30 L0 30 Z M90 0 L120 0 L120 30 L90 30 Z M0 90 L30 90 L30 120 L0 120 Z M90 90 L120 90 L120 120 L90 120 Z'/%3E%3C/g%3E%3C/svg%3E");
-    background-size:120px 120px;
-    pointer-events:none;
   }
-
-.hero-content {
-    /* 注意：这里绝对不能写 position: absolute */
+  .hero::before {
+    content: ""; position: absolute; inset: -10%; z-index: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(44, 95, 138, 0.1) 29px, rgba(44, 95, 138, 0.1) 30px),
+      repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(44, 95, 138, 0.1) 29px, rgba(44, 95, 138, 0.1) 30px);
+    animation: gridMove 40s linear infinite; pointer-events: none;
+  }
+  @keyframes gridMove { 0% { transform: translate(0, 0); } 100% { transform: translate(40px, 40px); } }
+  .hero-content {
     position: relative;
     z-index: 2;
     width: 100%;
     text-align: center;
-}
-
+  }
   .hero h1 {
-    font-size: 5rem;
-    font-weight: 200;
-    letter-spacing: 0.3em;
-    background: linear-gradient(135deg, var(--gold-l), var(--gold), var(--gold-l));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 0 80px rgba(201, 169, 97, 0.35);
-    text-align:center;
-    width:100%;
+    font-size: 5rem; font-weight: 300; letter-spacing: 0.4em; margin-bottom: 20px;
+    background: linear-gradient(135deg, #784212, #b8860b, #784212);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .hero-hint {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--gold);
-    font-size: 0.78rem;
-    letter-spacing: 0.32em;
-    opacity: 0.65;
-    z-index:3;
-  }
-
+  .hero .sub { font-size: 0.9rem; letter-spacing: 0.9em; color: var(--gold); margin-bottom: 30px; opacity: 0.9; font-weight: 500; }
+  .hero .divider { width: 80px; height: 1px; background: var(--gold); margin: 0 auto 30px; opacity: 0.6; }
+  .hero .desc { font-size: 1rem; color: rgba(26, 43, 60, 0.7); max-width: 520px; line-height: 2.2; letter-spacing: 0.08em; margin: 0 auto; }
+  .scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: var(--gold); font-size: 0.75rem; letter-spacing: 0.3em; opacity: 0.7; animation: bounce 2s infinite; z-index: 3; }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+  /* ============ 通用区块 ============ */
   section.block { padding: 100px 60px; max-width: 1100px; margin: 0 auto; position: relative; }
   .block-header { text-align: center; margin-bottom: 60px; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .block-header.visible { opacity: 1; transform: translateY(0); }
-  .block-header .num { font-size: 0.75rem; letter-spacing: 0.5em; color: var(--gold); opacity: 0.6; display: block; margin-bottom: 12px; }
-  .block-header h2 { font-size: 2.2rem; font-weight: 300; letter-spacing: 0.35em; color: var(--gold-l); margin-bottom: 14px; }
-  .block-header .line { width: 60px; height: 1px; background: var(--gold); margin: 0 auto 16px; opacity: 0.5; }
-  .block-header p { font-size: 0.85rem; color: rgba(245, 241, 232, 0.5); letter-spacing: 0.2em; }
+  .block-header .num { font-size: 0.75rem; letter-spacing: 0.5em; color: var(--gold); opacity: 0.8; display: block; margin-bottom: 12px; }
+  .block-header h2 { font-size: 2.2rem; font-weight: 300; letter-spacing: 0.35em; color: var(--cream); margin-bottom: 14px; }
+  .block-header .line { width: 60px; height: 1px; background: var(--gold); margin: 0 auto 16px; opacity: 0.6; }
+  .block-header p { font-size: 0.85rem; color: rgba(26, 43, 60, 0.6); letter-spacing: 0.2em; }
+  /* ============ 时间轴 ============ */
   .timeline { position: relative; padding: 20px 0; }
-  .timeline::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, rgba(201, 169, 97, 0.4), transparent); transform: translateX(-50%); }
+  .timeline::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, rgba(184, 134, 11, 0.4), transparent); transform: translateX(-50%); }
   .timeline-item { display: flex; justify-content: center; align-items: flex-start; margin-bottom: 50px; position: relative; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .timeline-item.visible { opacity: 1; transform: translateY(0); }
   .timeline-item:nth-child(odd) .tl-content { order: 1; text-align: right; padding-right: 50px; }
@@ -140,106 +108,79 @@
   .timeline-item:nth-child(even) .tl-empty { order: 1; text-align: right; padding-right: 50px; }
   .tl-content, .tl-empty { flex: 1; }
   .tl-content { padding-top: 4px; }
-  .tl-era { font-size: 1.05rem; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 8px; }
-  .tl-text { font-size: 0.88rem; color: rgba(245, 241, 232, 0.7); line-height: 1.9; }
-  .tl-dot { position: absolute; left: 50%; top: 8px; transform: translateX(-50%); width: 12px; height: 12px; border-radius: 50%; background: var(--navy); border: 2px solid var(--gold); z-index: 2; box-shadow: 0 0 16px rgba(201, 169, 97, 0.5); }
+  .tl-era { font-size: 1.05rem; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 8px; font-weight: 600; }
+  .tl-text { font-size: 0.88rem; color: rgba(26, 43, 60, 0.75); line-height: 1.9; }
+  .tl-dot { position: absolute; left: 50%; top: 8px; transform: translateX(-50%); width: 12px; height: 12px; border-radius: 50%; background: var(--navy); border: 2px solid var(--gold); z-index: 2; box-shadow: 0 0 16px rgba(184, 134, 11, 0.3); transition: transform 0.3s ease; }
+  .tl-dot:hover { transform: translateX(-50%) scale(1.3); }
+  /* ============ 工序卡片 ============ */
   .stage-group { margin-bottom: 50px; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .stage-group.visible { opacity: 1; transform: translateY(0); }
   .stage-title { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
-  .stage-title .stage-num { font-size: 2rem; font-weight: 200; color: var(--gold); opacity: 0.4; font-family: Georgia, serif; }
-  .stage-title .stage-name { font-size: 1rem; letter-spacing: 0.3em; color: var(--gold-l); }
-  .stage-title .stage-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(201, 169, 97, 0.4), transparent); }
+  .stage-title .stage-num { font-size: 2rem; font-weight: 200; color: var(--gold); opacity: 0.5; font-family: Georgia, serif; }
+  .stage-title .stage-name { font-size: 1rem; letter-spacing: 0.3em; color: var(--cream); font-weight: 600; }
+  .stage-title .stage-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(184, 134, 11, 0.3), transparent); }
   .step-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-  .step-card {
-    background: linear-gradient(135deg, rgba(21, 28, 46, 0.9), rgba(10, 14, 26, 0.95));
-    border: 1px solid rgba(201, 169, 97, 0.15);
-    border-radius: 10px;
-    background-image: linear-gradient(135deg, var(--gold) 0%, transparent 8%), linear-gradient(315deg, var(--gold) 0%, transparent 8%);
-    background-size: 14px 14px;
-    background-position: top left, bottom right;
-    background-repeat: no-repeat;
-    padding: 22px 16px; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
-  }
-  .step-card::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); transform: scaleX(0); transition: transform 0.4s; }
-  .step-card:hover { transform: translateY(-6px); border-color: rgba(201, 169, 97, 0.5); box-shadow: 0 12px 40px rgba(201, 169, 97, 0.15); }
-  .step-card:hover::after { transform: scaleX(1); }
-  .step-card .s-num { font-size: 1.6rem; font-weight: 200; color: var(--gold); opacity: 0.5; line-height: 1; margin-bottom: 10px; font-family: Georgia, serif; }
-  .step-card .s-name { font-size: 0.95rem; color: var(--cream); letter-spacing: 0.15em; }
-  .step-card .s-play { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(201, 169, 97, 0.4); display: flex; align-items: center; justify-content: center; font-size: 0.55rem; color: var(--gold); opacity: 0.6; }
-  .loom-box {
-    background: linear-gradient(135deg, rgba(21, 28, 46, 0.6), rgba(10, 14, 26, 0.9));
-    border: 1px solid rgba(201, 169, 97, 0.2);
-    border-radius: 16px;
-    background-image: linear-gradient(135deg, var(--gold) 0%, transparent 12%), linear-gradient(315deg, var(--gold) 0%, transparent 12%);
-    background-size:20px 20px;
-    background-position: top left,bottom right;
-    background-repeat:no-repeat;
-    padding: 30px; margin-top: 40px;
-  }
-  #loomCanvas { width: 100%; height: auto; display: block; border-radius: 8px; cursor: crosshair; }
+  .step-card { background: #ffffff; border: 1px solid rgba(44, 95, 138, 0.1); border-radius: 10px; padding: 22px 16px; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+  .step-card:hover { transform: translateY(-6px); border-color: rgba(184, 134, 11, 0.4); box-shadow: 0 12px 30px rgba(44, 95, 138, 0.1); }
+  .step-card .s-num { font-size: 1.6rem; font-weight: 200; color: var(--gold); opacity: 0.6; line-height: 1; margin-bottom: 10px; font-family: Georgia, serif; }
+  .step-card .s-name { font-size: 0.95rem; color: var(--cream); letter-spacing: 0.15em; font-weight: 500; }
+  .step-card .s-play { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(184, 134, 11, 0.4); display: flex; align-items: center; justify-content: center; font-size: 0.55rem; color: var(--gold); opacity: 0.8; }
+  /* ============ 织机互动 ============ */
+  .loom-box { background: #ffffff; border: 1px solid rgba(44, 95, 138, 0.15); border-radius: 16px; padding: 30px; margin-top: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+  #loomCanvas { width: 100%; height: auto; display: block; border-radius: 8px; cursor: crosshair; background: #f8fafc; }
   .loom-ctrl { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
-  .loom-ctrl button { padding: 12px 30px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 0.9rem; letter-spacing: 0.2em; cursor: pointer; border-radius: 6px; transition: all 0.3s; font-family: inherit; }
-  .loom-ctrl button:hover:not(:disabled) { background: var(--gold); color: var(--navy); }
-  .loom-ctrl button:disabled { opacity: 0.3; cursor: not-allowed; }
+  .loom-ctrl button { padding: 12px 30px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 0.9rem; letter-spacing: 0.2em; cursor: pointer; border-radius: 6px; transition: all 0.3s; font-family: inherit; font-weight: 600; }
+  .loom-ctrl button:hover:not(:disabled) { background: var(--gold); color: #fff; }
+  .loom-ctrl button:disabled { opacity: 0.4; cursor: not-allowed; }
   .mode-switch { display: flex; justify-content: center; margin-bottom: 20px; }
   .mode-switch button { padding: 10px 32px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 0.85rem; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s; font-family: inherit; }
   .mode-switch button:first-child { border-radius: 6px 0 0 6px; }
   .mode-switch button:last-child { border-radius: 0 6px 6px 0; }
-  .mode-switch button.active { background: var(--gold); color: var(--navy); }
-  .loom-info { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 16px; padding: 14px 20px; background: rgba(201, 169, 97, 0.05); border-radius: 8px; margin-bottom: 16px; }
-  .loom-info .info-item { color: var(--gold); font-size: 0.82rem; letter-spacing: 0.1em; }
+  .mode-switch button.active { background: var(--gold); color: #fff; }
+  .loom-info { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 16px; padding: 14px 20px; background: rgba(44, 95, 138, 0.04); border-radius: 8px; margin-bottom: 16px; }
+  .loom-info .info-item { color: var(--gold); font-size: 0.82rem; letter-spacing: 0.1em; font-weight: 600; }
   .loom-info .info-item span { color: var(--cream); font-weight: 500; }
-  .know-card { background: linear-gradient(135deg, rgba(201, 169, 97, 0.12), rgba(201, 169, 97, 0.03)); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 16px 22px; color: var(--gold-l); font-size: 0.85rem; line-height: 1.9; min-height: 60px; display: flex; align-items: center; }
+  .know-card { background: rgba(184, 134, 11, 0.05); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 16px 22px; color: var(--cream); font-size: 0.85rem; line-height: 1.9; min-height: 60px; display: flex; align-items: center; }
+  /* ============ 纹样图鉴 ============ */
   .pattern-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-  .pattern-card {
-    background: linear-gradient(135deg, rgba(21, 28, 46, 0.9), rgba(10, 14, 26, 0.95));
-    border: 1px solid rgba(201, 169, 97, 0.15);
-    border-radius: 12px;
-    background-image: linear-gradient(135deg, var(--gold) 0%, transparent 10%), linear-gradient(315deg, var(--gold) 0%, transparent 10%);
-    background-size:16px 16px;
-    background-position: top left,bottom right;
-    background-repeat:no-repeat;
-    overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .pattern-card:hover { transform: translateY(-8px); border-color: rgba(201, 169, 97, 0.5); box-shadow: 0 16px 48px rgba(201, 169, 97, 0.2); }
-  .pattern-card .p-img { height: 170px; background: #0a0e1a; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-  .pattern-card .p-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .pattern-card { background: #ffffff; border: 1px solid rgba(44, 95, 138, 0.1); border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+  .pattern-card:hover { transform: translateY(-8px); border-color: rgba(184, 134, 11, 0.4); box-shadow: 0 16px 40px rgba(44, 95, 138, 0.15); }
+  .pattern-card .p-img { height: 170px; background: #f4f9fd; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+  .pattern-card .p-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; loading:lazy; }
   .pattern-card:hover .p-img img { transform: scale(1.1); }
-  .pattern-card .p-name { padding: 14px; text-align: center; font-size: 0.95rem; color: var(--cream); letter-spacing: 0.2em; border-top: 1px solid rgba(201, 169, 97, 0.1); }
+  .pattern-card .p-name { padding: 14px; text-align: center; font-size: 0.95rem; color: var(--cream); letter-spacing: 0.2em; border-top: 1px solid rgba(44, 95, 138, 0.05); font-weight: 600; }
+  /* ============ 现状与建议 ============ */
   .info-list { display: grid; gap: 20px; }
-  .info-item {
-    background: linear-gradient(135deg, rgba(21, 28, 46, 0.7), rgba(10, 14, 26, 0.9));
-    border-left: 3px solid var(--gold);
-    border-radius: 0 10px 10px 0;
-    padding: 24px 28px; transition: all 0.3s;
-  }
-  .info-item:hover { transform: translateX(6px); background: linear-gradient(135deg, rgba(21, 28, 46, 0.9), rgba(10, 14, 26, 0.95)); }
-  .info-item .info-title { font-size: 1rem; color: var(--gold-l); letter-spacing: 0.15em; margin-bottom: 10px; }
+  .info-item { background: #ffffff; border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; padding: 24px 28px; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+  .info-item:hover { transform: translateX(6px); box-shadow: 0 6px 20px rgba(44, 95, 138, 0.08); }
+  .info-item .info-title { font-size: 1rem; color: var(--cream); letter-spacing: 0.15em; margin-bottom: 10px; font-weight: 700; }
   .info-item .info-title::before { content: "◆ "; color: var(--gold); font-size: 0.7rem; }
-  .info-item .info-text { font-size: 0.88rem; color: rgba(245, 241, 232, 0.7); line-height: 2; }
-  .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 500; align-items: center; justify-content: center; padding: 20px; animation: fadeIn 0.3s ease; }
+  .info-item .info-text { font-size: 0.88rem; color: rgba(26, 43, 60, 0.7); line-height: 2; }
+  /* ============ 模态框 ============ */
+  .modal { display: none; position: fixed; inset: 0; background: rgba(10, 14, 26, 0.6); backdrop-filter: blur(10px); z-index: 500; align-items: center; justify-content: center; padding: 20px; animation: fadeIn 0.3s ease; }
   .modal.active { display: flex; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .modal-box { background: linear-gradient(135deg, #1a2438, #0f1729); border: 1px solid rgba(201, 169, 97, 0.3); border-radius: 16px; max-width: 640px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 36px 32px; position: relative; animation: modalUp 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .modal-box { background: #ffffff; border-radius: 16px; max-width: 640px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 36px 32px; position: relative; animation: modalUp 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
   @keyframes modalUp { from { opacity: 0; transform: scale(0.94) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-  .modal-close { position: absolute; top: 14px; right: 18px; background: none; border: none; font-size: 1.8rem; color: var(--gold); cursor: pointer; line-height: 1; transition: transform 0.3s; font-family: inherit; }
+  .modal-close { position: absolute; top: 14px; right: 18px; background: none; border: none; font-size: 1.8rem; color: rgba(26,43,60,0.4); cursor: pointer; line-height: 1; transition: all 0.3s; font-family: inherit; }
   .modal-close:hover { transform: rotate(90deg); color: var(--cream); }
-  .modal-box h3 { font-size: 1.4rem; font-weight: 300; letter-spacing: 0.2em; color: var(--gold-l); margin-bottom: 6px; }
-  .modal-box .m-stage { font-size: 0.78rem; color: rgba(201, 169, 97, 0.6); letter-spacing: 0.2em; margin-bottom: 22px; }
-  .modal-box video, .modal-box img.m-img { width: 100%; border-radius: 10px; margin-bottom: 20px; display: block; background: #000; }
+  .modal-box h3 { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.2em; color: var(--cream); margin-bottom: 6px; }
+  .modal-box .m-stage { font-size: 0.78rem; color: rgba(184, 134, 11, 0.8); letter-spacing: 0.2em; margin-bottom: 22px; font-weight: 600; }
+  .modal-box video, .modal-box img.m-img { width: 100%; border-radius: 10px; margin-bottom: 20px; display: block; background: #f4f9fd; loading:lazy; }
   .modal-box video { max-height: 340px; object-fit: cover; }
-  .modal-box .m-desc { font-size: 0.9rem; color: rgba(245, 241, 232, 0.8); line-height: 2; margin-bottom: 18px; }
-  .modal-box .m-tip { background: rgba(201, 169, 97, 0.08); border-left: 3px solid var(--gold); padding: 12px 18px; font-size: 0.82rem; color: var(--gold-l); line-height: 1.9; border-radius: 0 8px 8px 0; }
-  .detail-row { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(201, 169, 97, 0.1); }
+  .modal-box .m-desc { font-size: 0.9rem; color: rgba(26, 43, 60, 0.8); line-height: 2; margin-bottom: 18px; }
+  .modal-box .m-tip { background: rgba(44, 95, 138, 0.05); border-left: 3px solid var(--blue); padding: 12px 18px; font-size: 0.82rem; color: var(--blue); line-height: 1.9; border-radius: 0 8px 8px 0; }
+  .detail-row { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(44, 95, 138, 0.08); }
   .detail-row:last-child { border-bottom: none; }
-  .detail-label { display: block; color: var(--gold); font-size: 0.72rem; letter-spacing: 0.3em; margin-bottom: 6px; }
-  .detail-content { font-size: 0.88rem; line-height: 2; color: rgba(245, 241, 232, 0.8); }
-  footer { text-align:center;padding:60px 20px;color:rgba(245,241,232,0.3);font-size:0.8rem;letter-spacing:0.3em; }
+  .detail-label { display: block; color: var(--gold); font-size: 0.72rem; letter-spacing: 0.3em; margin-bottom: 6px; font-weight: 700; }
+  .detail-content { font-size: 0.88rem; line-height: 2; color: rgba(26, 43, 60, 0.8); }
+  /* ============ 响应式 ============ */
   @media (max-width: 900px) {
     .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); }
     .menu-toggle { display: block; } main { margin-left: 0; }
     section.block { padding: 80px 24px; }
-    .hero h1 { font-size: 3rem; letter-spacing: 0.2em; }
+    .hero h1 { font-size: 3rem; letter-spacing: 0.3em; }
+    .hero .sub { letter-spacing: 0.5em; font-size: 0.8rem; }
     .block-header h2 { font-size: 1.5rem; letter-spacing: 0.25em; }
     .timeline::before { left: 20px; }
     .timeline-item { flex-direction: column; padding-left: 50px; }
@@ -250,35 +191,41 @@
     .pattern-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 480px) {
-    .hero h1 { font-size: 2.2rem; letter-spacing: 0.15em; }
+    .hero h1 { font-size: 2.2rem; }
     .step-grid { grid-template-columns: 1fr; }
     .pattern-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
-<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+<!-- 移动端菜单按钮 -->
+<button class="menu-toggle">☰</button>
+<!-- 侧边导航 -->
 <aside class="sidebar" id="sidebar">
   <div class="logo">侗锦</div>
   <div class="logo-en">DONG JIN</div>
   <nav>
-    <a data-target="hero" class="nav-link active">首页封面</a>
-    <a data-target="history" class="nav-link">历史渊源</a>
-    <a data-target="craft" class="nav-link">织造工艺与分类</a>
-    <a data-target="patterns" class="nav-link">织样文化阐释</a>
-    <a data-target="challenges" class="nav-link">现状与挑战</a>
-    <a data-target="suggestions" class="nav-link">保护与传承建议</a>
+    <a href="#history" class="nav-link">历史渊源</a>
+    <a href="#craft" class="nav-link">织造工艺与分类</a>
+    <a href="#patterns" class="nav-link">织样文化阐释</a>
+    <a href="#challenges" class="nav-link">现状与挑战</a>
+    <a href="#suggestions" class="nav-link">保护与传承建议</a>
   </nav>
 </aside>
+<!-- 主内容 -->
 <main>
-  <section class="page-section active" id="hero">
+  <!-- 首页 -->
+  <section class="hero" id="hero">
     <div class="hero-content">
-      <h1>侗锦·千年经纬</h1>
+      <h1>侗锦</h1>
+      <p class="sub">千 年 经 纬</p>
+      <div class="divider"></div>
+      <p class="desc">侗族没有文字，两千多年的历史记忆、神话传说与族群信仰，<br>都被织娘以经纬为笔，织入方寸锦面之中。</p>
     </div>
-    <div class="hero-hint">请点击左侧导航窗格</div>
+    <div class="scroll-hint">向 下 滚 动 ↓</div>
   </section>
-
-  <section class="page-section block" id="history">
+  <!-- 历史渊源 -->
+  <section class="block" id="history">
     <div class="block-header"><span class="num">01 / 05</span><h2>历史渊源</h2><div class="line"></div><p>从百越葛麻，到国家级非遗</p></div>
     <div class="timeline">
       <div class="timeline-item">
@@ -307,24 +254,25 @@
       </div>
     </div>
   </section>
-
-  <section class="page-section block" id="craft">
+  <!-- 织造工艺与分类 -->
+  <section class="block" id="craft">
     <div class="block-header"><span class="num">02 / 05</span><h2>织造工艺与分类</h2><div class="line"></div><p>十三道古法工序 · 亲手织一段侗锦</p></div>
     <div id="stepGroups"></div>
+    <!-- 织机互动 -->
     <div class="loom-box">
       <div style="text-align:center;margin-bottom:24px;">
-        <h3 style="font-size:1.1rem;font-weight:300;letter-spacing:0.3em;color:var(--gold-l);">亲 手 织 一 段 侗 锦</h3>
-        <p style="font-size:0.8rem;color:rgba(245,241,232,0.4);letter-spacing:0.15em;margin-top:8px;">白棉纱作经线 · 纬线起花 · 通经通纬</p>
+        <h3 style="font-size:1.1rem;font-weight:600;letter-spacing:0.3em;color:var(--cream);">亲 手 织 一 段 侗 锦</h3>
+        <p style="font-size:0.8rem;color:rgba(26,43,60,0.5);letter-spacing:0.15em;margin-top:8px;">白棉纱作经线 · 纬线起花 · 通经通纬</p>
       </div>
       <div class="mode-switch">
-        <button id="modeSu" class="active" onclick="setMode('su')">素 锦</button>
-        <button id="modeCai" onclick="setMode('cai')">彩 锦</button>
+        <button id="modeSu" class="active">素 锦</button>
+        <button id="modeCai">彩 锦</button>
       </div>
       <canvas id="loomCanvas" width="900" height="480"></canvas>
       <div class="loom-ctrl">
-        <button id="btnThrow" onclick="throwShuttle()">投梭穿纬</button>
-        <button id="btnBeat" onclick="beatWeft()" disabled>打纬压实</button>
-        <button onclick="resetLoom()">重新开始</button>
+        <button id="btnThrow">投梭穿纬</button>
+        <button id="btnBeat" disabled>打纬压实</button>
+        <button>重新开始</button>
       </div>
       <div class="loom-info">
         <div class="info-item">已投梭：<span id="infoPass">0</span> 次</div>
@@ -334,13 +282,13 @@
       <div class="know-card" id="knowCard">点击「投梭穿纬」，让梭子穿过经线，开始织造。</div>
     </div>
   </section>
-
-  <section class="page-section block" id="patterns">
+  <!-- 织样文化阐释 -->
+  <section class="block" id="patterns">
     <div class="block-header"><span class="num">03 / 05</span><h2>织样文化阐释</h2><div class="line"></div><p>纹样名称 — 视觉特征 — 符号象征 — 当代寓意</p></div>
     <div class="pattern-grid" id="patternGrid"></div>
   </section>
-
-  <section class="page-section block" id="challenges">
+  <!-- 现状与挑战 -->
+  <section class="block" id="challenges">
     <div class="block-header"><span class="num">04 / 05</span><h2>现状与挑战</h2><div class="line"></div><p>传承体系 · 面临困境</p></div>
     <div class="info-list">
       <div class="info-item"><div class="info-title">传承人老龄化与年轻人流失</div><div class="info-text">如今还在织锦的匠人年纪偏大，年轻人不多。由于制作侗锦辛苦，现在肯学的人越来越少。村里的年轻人纷纷外出打工，织机蒙尘，纺线声渐消。</div></div>
@@ -349,8 +297,8 @@
       <div class="info-item"><div class="info-title">产品形态局限</div><div class="info-text">湖南侗锦还是以传统的棉纱手工织造为主，幅宽较窄，大多只有三四十厘米，面料不够多样化。传统侗锦多用于日常穿戴，品种比较单一。</div></div>
     </div>
   </section>
-
-  <section class="page-section block" id="suggestions">
+  <!-- 保护与传承建议 -->
+  <section class="block" id="suggestions">
     <div class="block-header"><span class="num">05 / 05</span><h2>保护与传承建议</h2><div class="line"></div><p>让侗锦从"被观赏"到"被理解"</p></div>
     <div class="info-list">
       <div class="info-item"><div class="info-title">深化纹样文化阐释</div><div class="info-text">建立"纹样名称—视觉特征—符号象征—当代寓意"四层阐释档案，系统记录织娘口述的纹样故事。粟田梅指出："织锦如做人，要经纬分明，心中有数。"推动纹样阐释成果进入博物馆展陈、非遗教育和文旅宣传，让公众"看得懂"侗锦。</div></div>
@@ -359,17 +307,19 @@
       <div class="info-item"><div class="info-title">以文化阐释赋能产品溢价</div><div class="info-text">探索"文化阐释直接赋能产品溢价"的价值转化路径。通道已形成"文创+公司+基地+农户"的发展模式。民营文创企业联合高校开发箱包、围巾等20余种侗锦产品，2025年亮相全国两会。</div></div>
       <div class="info-item"><div class="info-title">加强跨界合作与数字化传播</div><div class="info-text">深化"非遗+电商+文旅"模式。湖南大学"织颜纺颂——非遗侗锦智能设计系统"项目已入选联合国教科文组织创意中心示范案例，推动侗锦进入奔驰、宝马、华为等多行业领域。持续推进侗锦纹样的数字化采集与建档工作。</div></div>
     </div>
-    <footer>侗锦 · 千年经纬 — 国家级非物质文化遗产</footer>
   </section>
+  <footer style="text-align:center;padding:60px 20px;color:rgba(26,43,60,0.4);font-size:0.8rem;letter-spacing:0.3em;">侗锦 · 千年经纬 — 国家级非物质文化遗产</footer>
 </main>
-
-<div class="modal" id="modal" onclick="if(event.target===this) closeModal()">
+<!-- 弹窗 -->
+<div class="modal" id="modal">
   <div class="modal-box" id="modalBox"></div>
 </div>
-
 <script>
-const BASE_URL = 'https://cdn.jsdelivr.net/gh/fuhanyue2016/dongjin@main/';
-
+/* ================================================================
+   ⚠️ 此处为国内网络加速镜像，解决了视频和图片无法加载的问题。
+   如果你以后觉得慢，可以换成 'https://gcore.jsdelivr.net/gh/fuhanyue2016/dongjin@main/'
+   ================================================================ */
+const BASE_URL = 'https://raw.gitmirror.com/fuhanyue2016/dongjin/main/';
 const craftSteps = [
   { stage: '原料准备与加工', steps: [
     { id: 1, name: '选棉', video: BASE_URL + '选棉.mp4', desc: '精选优质棉花作为原料。侗族地区气候温润，适宜棉花生长，织娘会挑选纤维长、色泽白的棉花。' },
@@ -383,15 +333,14 @@ const craftSteps = [
     { id: 7, name: '染纱', video: BASE_URL + '染纱.mp4', desc: '根据需要将纱线染成不同颜色。素锦以黑白为主，彩锦则使用红、绿、紫、黄、蓝等多色。' },
     { id: 8, name: '络纱', video: BASE_URL + '络纱.mp4', desc: '将纱线卷绕到络纱工具上，便于织造时使用。' },
     { id: 9, name: '排纱牵经', video: BASE_URL + '排纱牵经.mp4', desc: '将经纱按照设计要求排列整齐并牵引至织机，最考验织娘耐心与经验的工序之一。' },
-    { id: 10, name: '绞纱、绞经', video: BASE_URL + '绞纱绞经.mp4', desc: '对经纱进行梳理和排列。绞纱是将经纱分组交叉，便于后续穿筘和提综。' },
-    { id: 11, name: '穿筘、梳纱', video: BASE_URL + '穿箱梳纱.mp4', desc: '将经纱穿过竹筘，梳理整齐。竹筘的密度决定了经纱的排列密度，直接影响锦面效果。' }
+    { id: 10, name: '绞纱、绞经', video: BASE_URL + '绞纱绞经.mp4', desc: '对经纱进行梳理和排列。绞纱是将经纱分组交叉，便于后续穿箱和提综。' },
+    { id: 11, name: '穿箱、梳纱', video: BASE_URL + '穿箱梳纱.mp4', desc: '将经纱穿过竹箱，梳理整齐。竹箱的密度决定了经纱的排列密度，直接影响锦面效果。' }
   ]},
   { stage: '织造', steps: [
     { id: 12, name: '上机', video: BASE_URL + '上机.mp4', desc: '将整理好的经纱安装到织机上。斜架式织机（侗语称"耸求"）机身倾斜，契合人体工学。' },
     { id: 13, name: '织造/织锦', video: BASE_URL + '织造.mp4', desc: '在织机上完成侗锦的编织。以白棉纱作经线，纬线起花，两梭组织，一梭花纹，一梭平纹，通纬梭织。正反两面起花，色彩两面相反。' }
   ]}
 ];
-
 const patterns = [
   { name: '蜘蛛纹', img: BASE_URL + '蜘蛛纹.jpg', visual: '以八脚蜘蛛的抽象几何形态呈现，常见于儿童背带、襁褓之上，有小蜘蛛纹、大蜘蛛纹之分。', symbol: '蜘蛛是侗族独具特色的吉祥物，相传是侗族最高始祖萨岁的化身，象征智慧、多子多福、种族繁盛。侗族信奉的女神"萨巴天"形象便是一只金斑蜘蛛。', meaning: '寄托侗族人民对种族繁盛的美好祈愿，象征勤劳勇敢与家族兴旺。' },
   { name: '鱼纹', img: BASE_URL + '鱼纹.jpg', visual: '以鱼类的抽象或具象形态呈现，常见于被面、背带等生活用品。', symbol: '体现侗族"稻田养鱼"的传统生计方式，鱼是侗族生活中不可或缺的食物来源与精神寄托。', meaning: '寓意"年年有余"，表达侗族人民对丰衣足食的期盼。' },
@@ -403,21 +352,12 @@ const patterns = [
   { name: '万字纹', img: BASE_URL + '万字纹.jpg', visual: '以"卍"字形及其变体形式呈现，是侗锦中最为常见的几何纹样之一。', symbol: '原型与生殖繁衍崇拜有关，也象征太阳或火。多个万字纹相连，即为"富贵不断头"之意。', meaning: '象征吉祥如意、福运绵长。' }
 ];
 
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.page-section');
-navLinks.forEach(link=>{
-  link.addEventListener('click',function(){
-    const targetId = this.dataset.target;
-    document.querySelector('.sidebar').classList.remove('open');
-    navLinks.forEach(l=>l.classList.remove('active'));
-    this.classList.add('active');
-    sections.forEach(s=>s.classList.remove('active'));
-    document.getElementById(targetId).classList.add('active');
-    if(targetId === 'craft'){
-      setTimeout(()=>{ initLoom(); },100);
-    }
-  })
-})
+// 移动端菜单按钮JS
+const menuToggle = document.querySelector('.menu-toggle');
+menuToggle.addEventListener('click',function(){
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.body.classList.toggle('sidebar-open');
+});
 
 function renderSteps() {
   const c = document.getElementById('stepGroups');
@@ -431,19 +371,16 @@ function renderSteps() {
   });
   c.innerHTML = html;
 }
-
 function openStep(id) {
   let step = null, stageName = '';
-  craftSteps.forEach(s => {
-    s.steps.forEach(st => { if (st.id === id) { step = st; stageName = s.stage; } });
-  });
+  craftSteps.forEach(s => { s.steps.forEach(st => { if (st.id === id) { step = st; stageName = s.stage; } }); });
   if (!step) return;
   const modal = document.getElementById('modalBox');
   modal.innerHTML = `
     <button class="modal-close" onclick="closeModal()">×</button>
     <h3>${step.name}</h3>
     <div class="m-stage">${stageName} · 第 ${step.id} 道</div>
-    <video controls autoplay muted loop playsinline>
+    <video controls preload="none" playsinline poster="${BASE_URL}${step.id}.jpg" onerror="this.poster='';">
       <source src="${step.video}" type="video/mp4">
     </video>
     <div class="m-desc">${step.desc}</div>
@@ -451,17 +388,15 @@ function openStep(id) {
   `;
   document.getElementById('modal').classList.add('active');
 }
-
 function renderPatterns() {
   const g = document.getElementById('patternGrid');
   g.innerHTML = patterns.map((p, i) => `
     <div class="pattern-card" onclick="openPattern(${i})">
-      <div class="p-img"><img src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;color:var(--gold);font-size:2rem;opacity:0.4;&quot;>◈</span>'"></div>
+      <div class="p-img"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;color:var(--gold);font-size:2rem;opacity:0.6;&quot;>◈</span>'"></div>
       <div class="p-name">${p.name}</div>
     </div>
   `).join('');
 }
-
 function openPattern(i) {
   const p = patterns[i];
   const modal = document.getElementById('modalBox');
@@ -469,20 +404,21 @@ function openPattern(i) {
     <button class="modal-close" onclick="closeModal()">×</button>
     <h3>${p.name}</h3>
     <div class="m-stage">侗锦纹样 · 文化阐释</div>
-    <img class="m-img" src="${p.img}" alt="${p.name}">
+    <img class="m-img" src="${p.img}" alt="${p.name}" loading="lazy">
     <div class="detail-row"><span class="detail-label">视 觉 特 征</span><div class="detail-content">${p.visual}</div></div>
     <div class="detail-row"><span class="detail-label">符 号 象 征</span><div class="detail-content">${p.symbol}</div></div>
     <div class="detail-row"><span class="detail-label">当 代 寓 意</span><div class="detail-content">${p.meaning}</div></div>
   `;
   document.getElementById('modal').classList.add('active');
 }
-
 function closeModal() {
   document.getElementById('modal').classList.remove('active');
   const v = document.querySelector('#modalBox video');
   if (v) v.pause();
 }
-
+/* ================================================================
+   织机互动 Canvas 逻辑，增加DPR高分屏适配
+   ================================================================ */
 const canvas = document.getElementById('loomCanvas');
 const ctx = canvas.getContext('2d');
 const WARP = 48, WEFT = 26, CW = 900, CH = 480, ML = 70, MR = 70, MT = 55, MB = 55;
@@ -501,6 +437,14 @@ const knowCards = [
 ];
 
 function initLoom() {
+  // DPR适配高分屏
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = CW * dpr;
+  canvas.height = CH * dpr;
+  canvas.style.width = CW + "px";
+  canvas.style.height = CH + "px";
+  ctx.scale(dpr, dpr);
+
   fabric = Array(WARP).fill().map(() => Array(WEFT).fill(0));
   pass = 0; shuttleX = 0; awaitingBeat = false; knowIdx = 0; updateInfo();
   document.getElementById('btnThrow').disabled = false;
@@ -509,13 +453,19 @@ function initLoom() {
   drawLoom();
 }
 
+// mode切换按钮
+document.getElementById('modeSu').onclick = function(){setMode('su');};
+document.getElementById('modeCai').onclick = function(){setMode('cai');};
+document.getElementById('btnThrow').onclick = throwShuttle;
+document.getElementById('btnBeat').onclick = beatWeft;
+document.querySelector('.loom-ctrl button:last-child').onclick = resetLoom;
+
 function setMode(m) {
   mode = m;
   document.getElementById('modeSu').classList.toggle('active', m === 'su');
   document.getElementById('modeCai').classList.toggle('active', m === 'cai');
   drawLoom();
 }
-
 function throwShuttle() {
   if (animating || awaitingBeat || pass >= WEFT) return;
   animating = true; document.getElementById('btnThrow').disabled = true;
@@ -529,7 +479,6 @@ function throwShuttle() {
   }
   requestAnimationFrame(step);
 }
-
 function beatWeft() {
   if (!awaitingBeat) return;
   awaitingBeat = false;
@@ -545,40 +494,60 @@ function beatWeft() {
   else { document.getElementById('knowCard').textContent = `已织入第 ${pass} 梭。继续投梭，注意观察锦面纹理的变化。`; }
   if (pass >= WEFT) { document.getElementById('btnThrow').disabled = true; document.getElementById('knowCard').textContent = '🎉 你已织完一段侗锦！真实的侗锦织造需要数月甚至更长时间。'; }
 }
-
 function getWeftColor(i) { return mode === 'su' ? (i % 2 === 0 ? '#1a1a1a' : '#f5f1e8') : ['#c0392b', '#27ae60', '#8e44ad', '#d4a017', '#2980b9', '#e67e22'][i % 6]; }
 function updateInfo() { document.getElementById('infoPass').textContent = pass; document.getElementById('infoInch').textContent = (pass / WEFT).toFixed(2); }
 function resetLoom() { initLoom(); }
-
 function drawLoom() {
   ctx.clearRect(0, 0, CW, CH);
-  const bg = ctx.createLinearGradient(0, 0, CW, CH); bg.addColorStop(0, '#0a0f1c'); bg.addColorStop(1, '#141d33'); ctx.fillStyle = bg; ctx.fillRect(0, 0, CW, CH);
+  const bg = ctx.createLinearGradient(0, 0, CW, CH); bg.addColorStop(0, '#f8fafc'); bg.addColorStop(1, '#eef5fb'); ctx.fillStyle = bg; ctx.fillRect(0, 0, CW, CH);
   const lw = CW - ML - MR, lh = CH - MT - MB, ws = lw / WARP, hs = lh / WEFT;
-  ctx.strokeStyle = 'rgba(201, 169, 97, 0.25)'; ctx.lineWidth = 2; ctx.strokeRect(ML - 12, MT - 12, lw + 24, lh + 24);
+  ctx.strokeStyle = 'rgba(44, 95, 138, 0.2)'; ctx.lineWidth = 2; ctx.strokeRect(ML - 12, MT - 12, lw + 24, lh + 24);
   for (let i = 0; i < WARP; i++) for (let j = 0; j < pass; j++) {
     ctx.fillStyle = fabric[i][j] === 1 ? getWeftColor(j) : '#e8e4d8';
     ctx.fillRect(ML + i * ws, MT + j * hs, ws + 0.5, hs + 0.5);
   }
   for (let i = 0; i < WARP; i++) {
-    ctx.strokeStyle = 'rgba(232, 228, 216, 0.2)'; ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(26, 43, 60, 0.15)'; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(ML + i * ws + ws / 2, MT + pass * hs); ctx.lineTo(ML + i * ws + ws / 2, MT + lh); ctx.stroke();
   }
   if (pass < WEFT) {
     const sx = ML + shuttleX * lw, sy = MT + pass * hs + hs / 2, sw = 60, sh = 16;
-    ctx.save(); ctx.shadowColor = 'rgba(201, 169, 97, 0.8)'; ctx.shadowBlur = 16; ctx.fillStyle = '#c9a961';
+    ctx.save(); ctx.shadowColor = 'rgba(184, 134, 11, 0.5)'; ctx.shadowBlur = 12; ctx.fillStyle = '#b8860b';
     ctx.beginPath(); ctx.moveTo(sx - sw / 2, sy); ctx.lineTo(sx - sw / 2 + 12, sy - sh / 2); ctx.lineTo(sx + sw / 2 - 12, sy - sh / 2); ctx.lineTo(sx + sw / 2, sy); ctx.lineTo(sx + sw / 2 - 12, sy + sh / 2); ctx.lineTo(sx - sw / 2 + 12, sy + sh / 2); ctx.closePath(); ctx.fill(); ctx.restore();
     ctx.fillStyle = getWeftColor(pass); ctx.fillRect(sx - 14, sy - 3, 28, 6);
   }
-  ctx.fillStyle = 'rgba(201, 169, 97, 0.5)'; ctx.font = '13px "PingFang SC", sans-serif'; ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(26, 43, 60, 0.6)'; ctx.font = '13px "PingFang SC", sans-serif'; ctx.textAlign = 'center';
   ctx.fillText('经线（白棉纱）', ML + lw / 2, MT - 28); ctx.fillText('纬线（起花）', ML + lw / 2, CH - 18);
 }
-
+/* ================================================================
+   滚动动画与导航高亮，修复导航切换不准
+   ================================================================ */
 function observeVisible() {
   const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
   document.querySelectorAll('.block-header, .timeline-item, .stage-group').forEach(el => obs.observe(el));
 }
-
-renderSteps(); renderPatterns(); initLoom(); observeVisible();
+function observeNav() {
+  const sections = document.querySelectorAll('section[id]'); const links = document.querySelectorAll('.nav-link');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { threshold: 0.2, rootMargin: "-100px 0px -70% 0px" });
+  sections.forEach(s => obs.observe(s));
+}
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => { document.querySelector('.sidebar').classList.remove('open'); document.body.classList.remove('sidebar-open'); });
+});
+// 弹窗外层点击关闭
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target === this) closeModal();
+});
+// 初始化
+renderSteps(); renderPatterns(); initLoom(); observeVisible(); observeNav();
 </script>
 </body>
 </html>
